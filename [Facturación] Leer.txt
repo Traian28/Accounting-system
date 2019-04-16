@@ -1,0 +1,51 @@
+1. Agregue una tabla llamada "Producto_pie" que calcula los valores 
+de IVA (al 21, al 27, al 10.5 y para exento) para que mostrarlos en 
+en el pie de la factura A. En caso que sea factura B, los 
+valores de abajo no se muestran, se muestra directamente el total. 
+
+
+2. Agregue una tabla llamada "Comprobantes" que almacena todos los
+reportes de Factura, notas de debito o notas de credito que hagamos, 
+almacena el cliente al que le vendes, el tipo de comprobante y los 
+valores netos, iva (al 21 10,5 y 27) y totales. Esta tabla se carga 
+cuando apretas el boton "Grabar" que tambien lo agregue en el formulario
+de facturacion. 
+
+
+3. Modifique la carga cbb2 (el que te permite elegir el tipo de 
+comprobante) para que nos indique el tipo de comprobante segun la 
+situacion frente a IVA del cliente seleccionado. Entonces el tipo de 
+comprobante esta bloqueado hasta que se elija el cliente. y ahi te da 
+las opciones correspondientes, para evitar el error del operario.
+
+
+4. Modifique la tabla Puntos_Venta para llevar ahí mismo el número 
+de los comprobantes porque ese tiene que tener un contador propio por
+cada punto de venta existente y por cada tipo de comprobante. 
+Tambien modifique un poco el codigo que hiciste para generar el numero 
+de comprobante porque no actualizaba el contador. El contador en este 
+caso se actualiza cada vez que apretas "Grabar". 
+Basicamente uní las tablas "Tipo_factura" y Puntos_Venta y modifique el
+codigo para llevar el contador desde ahi. Los valores de los campos
+"Factura_A" y "Factura_B" hay que iniciarlos en 1 al momento de crear la
+tabla.
+Tambien le agrege un campo "Activo" ya que si eliminas un pdv, y al 
+tiempo volves a dar de alta uno con el id que eliminaste estaria mal
+que empiece el contador de cero de nuevo. Asique en realidad nunca se
+elimina un Punto de venta sino que se pasa a activo=false
+
+
+5. Agregue un campo para los Impuestos internos en el alta de productos
+y modifique el codigo para que calcule y sume los impuestos internos o
+tambien conocidos como percepciones y retenciones. Tambien lo edite para
+que funcione en el caso particular de los "No categorizados" que tienen
+un calculo especial del iva.
+
+
+6. Implemente el AMB de PDVs y parece funcionar bien.
+
+
+7. Modifique la forma en que toma las fechas de las facturas porque es
+necesario comparar la fecha del comprobante a emitir. 
+La ultima elegida para la emision de comprobante del punto de venta que
+va a vender no puede ser menor a la ultima fecha de comprobante.

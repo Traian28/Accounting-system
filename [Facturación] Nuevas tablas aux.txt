@@ -1,0 +1,81 @@
+CREATE Table Producto_Pie (
+	cod_aux int identity (1,1),
+	neto21 real null,
+	iva21 real null,
+	neto27 real null,
+	iva27 real null,
+	neto105 real null,
+	iva105 real null,
+	exento real null,
+	pyr real null);
+	
+
+CREATE Table Comprobantes (
+	cod int identity (1,1),
+	cliente varchar(20),
+	cuit varchar(20),
+	fecha date,
+	punto_venta int,
+	tipo varchar(20),
+	nro varchar(30) null,
+	neto21 real null,
+	iva21 real null,
+	neto27 real null,
+	iva27 real null,
+	neto105 real null,
+	iva105 real null,
+	exento real null,
+	ret_perc real null,
+	total real null);
+
+CREATE table Productos (
+	Clave_producto int PRIMARY KEY,
+	nombre_poducto varchar(50),
+	fecha_ingreso date,
+	stock int,
+	precio real,
+	tipo_tasa Varchar(50),
+	tasa_iva real,
+	precio_final real,
+	pyr real);
+
+CREATE Table Puntos_Venta (
+	codigo_venta int PRIMARY KEY,
+	Descripcion Varchar(50),
+	Factura_A int,
+	Factura_B int,
+	fc bit,
+	nc bit,
+	nd bit,
+	rc bit,
+	activo bit,
+	ultima_fechaA date,
+	ultima_fechaB date);
+
+
+CREATE Table Comprobantes_aux (
+	cod int identity (1,1),
+	cliente varchar(20) null,
+	cuit varchar(20) null,
+	fecha date null,
+	punto_venta int null,
+	neto21 real null,
+	iva21 real null,
+	neto27 real null,
+	iva27 real null,
+	neto105 real null,
+	iva105 real null,
+	exento real null,
+	ret_perc real null,
+	total real null,
+	total_neto21 real null,
+	total_iva21 real null,
+	total_neto27 real null,
+	total_iva27 real null,
+	total_neto105 real null,
+	total_iva105 real null,
+	total_exento real null,
+	total_retperc real null,
+	total_total real null);
+
+

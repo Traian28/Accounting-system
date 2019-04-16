@@ -1,0 +1,20 @@
+Genio! Te explico mas o menos la boludes que le implemente a ver que te parece.
+
+Segun eduardo, no quiere que mostremos (o si, pero prefiere que no) las empresas
+que usan el sistema. La idea de esta ejecucion es la siguiente
+
+Empieza con una ventana de logueo por empresa, que cada una de estas tiene un
+usuario tipo de red, para poder acceder y vincular la base de datos correspondiente.
+Por ejemplo, en las dos bases que cree, la primera es: //Empresa1  y  la segunda  //Empresa2
+
+Un usuario de otra empresa puede tener el loguin o usuario de red si se lo da otra persona
+pero le seria insignificante porque el usuario de acceso de el, no pertenece a esa empresa.
+Le agregue en la pestaña del nombre de ventana como el queria quien se loguea, empresa y demas.
+
+La seleccion de empresa anda barbaro, de hecho andan bien las bases y no se pisan ni siquiera
+con los reportes.
+En la pestaña generar base de datos anda perfecto, el tema que todavia no puedo levantarlas
+ni desde la funcion de SQL. Tira error de proceso y no entiendo por que. ASique estoy 
+averiguando todavia.
+
+Testealo y chiflame que te parece hasta el momento.

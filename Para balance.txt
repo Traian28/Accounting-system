@@ -1,0 +1,5 @@
+select *
+from Plan_Cuenta
+where codigo_cuenta > '1' and codigo_cuenta <'2'
+
+

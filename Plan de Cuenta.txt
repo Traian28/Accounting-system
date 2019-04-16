@@ -1,0 +1,49 @@
+CREATE TABLE balance (
+	codigo_cuenta Varchar(25) PRIMARY KEY,
+	Nombre_Cuenta Varchar(75),
+	tipo_cuenta int,
+	nivel_cuenta int,
+	Saldo_Debe Real,
+	Saldo_Haber Real);
+
+
+
+CREATE TABLE Plan_Cuenta (
+	codigo_cuenta Varchar(25) PRIMARY KEY,
+	Nombre_Cuenta Varchar(75),
+	tipo_cuenta int,
+	nivel_cuenta int,
+	Saldo_Debe real,
+	Saldo_Haber real);
+
+
+
+
+CREATE TABLE Asientos  (
+	clave_as int identity (1,1),
+	id_asiento int,
+	id_cuenta int,
+	nombre_cuenta Varchar(55),
+	id_asiento int,
+	concepto_asiento Varchar(55),
+	importe_as int,
+	tipo_as Varchar (10),
+	fecha_op date,
+	fecha_vto date );
+
+CREATE TABLE Asientos_borrador  (
+	clave_as int identity (1,1),
+	id_asiento int,
+	id_cuenta int,
+	nombre_cuenta Varchar(55),
+	id_asiento int,
+	concepto_asiento Varchar(55),
+	importe_as int,
+	tipo_as Varchar (10),
+	fecha_op date,
+	fecha_vto date );
+
+
+
+	fecha_op date,
+	fecha_vto date);

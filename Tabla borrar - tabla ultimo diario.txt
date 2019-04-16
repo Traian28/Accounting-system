@@ -1,0 +1,18 @@
+CREATE TABLE tabla_borrador  (
+	clave_borrador int identity (1,1),
+	num_pase varchar(25),
+	leyenda varchar(50),
+	cuenta varchar(25),
+	fecha_op varchar(25),
+	saldo_debe varchar(25),
+	saldo_haber varchar(25),
+	fecha_impresion date);
+
+CREATE table Ultimo_Diario (
+	clave_borrador int identity (1,1),
+	fecha_impresion date,
+	ultimo_tomo int,
+	ultimo_folio int,
+	transporte_debe decimal(8,2),
+	transporte_haber decimal(8,2),
+	ultimo_asiento int);

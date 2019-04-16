@@ -1,0 +1,29 @@
+-En el alta de clientes habria que implementar el algoritmo que verifica
+el ultimo digito del cuit que se esta ingresando (el pdf que mando el
+profesor lo copie en la carpeta, se llama "2017_RTDIGCUI"
+
+-En la pestaña de Facturación agregue un boton que se llama "Resumen de
+Operaciones". Ese boton no hace nada, pero la idea seria que ese te
+envie a otro formulario en el cual se solicite un reporte Resumen
+entre dos fechas elegidas. En el Reporte resumen que se muestra
+hay que mostrar todos los campos de la tabla "Comprobantes"
+
+-Habría que implementar alguna forma de que el operador pueda buscar
+los comprobantes realizados ya sea por cliente, fecha o numero de
+comprobante como quieras. O sino darle un listado con todos los
+comprobantes realizados y que al darle doble click se lo traiga por ej.
+
+-En el reporte de facturacion, una vez generada la venta faltaria 
+agregarle abajo los datos de la tabla "Producto_pie" para el caso
+de las Comprobantes A y la letra A en el medio, y para el caso de 
+los comprobates B hay que mostrar abajo el total de la factura
+directamente (no hay que mostrar ninguna discriminacion de iva, 
+a lo sumo la Alicuota o porcentaje por el cual estan gravados los
+productos selccionados).
+
+Tambien en el reporte habria que modificarlo para que en la parte de 
+arriba a la izquierda (donde ahora mostras el punto de venta) diga los
+datos de la empresa que esta vendiendo (por ej: "Empresa 1") y los datos
+de la misma, direccion cuit etc.
+
+

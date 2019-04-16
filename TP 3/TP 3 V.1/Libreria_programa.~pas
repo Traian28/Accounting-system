@@ -1,0 +1,179 @@
+unit Libreria_programa;
+
+interface
+
+uses
+   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls;
+
+//______________ ABM - Persona _______________
+function ValidarPersona(dni: integer): boolean;
+function ValidarZona(clav: integer): boolean;
+Procedure AltaPersona(Nombre: String; Apellido: String; Edad: String; dni: integer; Tipodoc: integer; sexo: String; Loc: String; zona: integer);
+Procedure BajaPersona(dni: integer);
+Procedure ModificarPersona(Nombre: String; Apellido: String; Edad: String; dni: integer; Tipodoc: integer; sexo: String; Loc: String; DniNuevo: Integer; zona: integer);
+
+
+//______________ ABM - Documentos ______________
+function ValidarDocumento(tipo: integer): boolean;
+Procedure AltaDocumento(id_doc: integer; DescDoc: String; SiglaDoc: string);
+Procedure BajaDocumento(id_doc: integer);
+Procedure ModificarDocumento(id_doc: integer; DescDoc: String; SiglaDoc: integer; Sigla_docnuevo: String);
+
+//______________ Consultas  _________________
+
+implementation
+
+uses Pantalla_programa;
+
+//--------------VALIDAR SI EXISTE Persona------------
+function ValidarPersona(dni: integer): boolean;
+var
+Documento: string;
+begin
+  documento:= inttostr(dni);
+  Pantalla_programa.Form2.ADOquery.SQL.Text:= ('Select * from Personas where P_Nrodoc='+(documento));
+  Pantalla_programa.Form2.ADOquery.Open;   // Validacion si existe un usuario con ese documento
+  Pantalla_Programa.Form2.ADOquery.First;
+    If (dni = Pantalla_Programa.Form2.ADOquery.FieldByName('P_Nrodoc').Value)
+      then
+        ValidarPersona:= true
+      else
+        ValidarPersona:= false;
+end;
+
+function ValidarZona(clav: integer): boolean;
+var
+clave: string;
+begin
+  clave:= inttostr(dni);
+  Pantalla_programa.Form2.ADOquery.SQL.Text:= ('Select * from Zonas_Ventas where ZC_Clave='+(Clave));
+  Pantalla_programa.Form2.ADOquery.Open;   // Validacion si existe un usuario con ese documento
+  Pantalla_Programa.Form2.ADOquery.First;
+    If (clave = Pantalla_Programa.Form2.ADOquery.FieldByName('ZC_Clave').Value)
+      then
+        ValidarZona:= true
+      else
+        ValidarZona:= false;
+end;
+//------------ALTA DE PERSONA-----------------
+Procedure AltaPersona(Nombre: String; Apellido: String; Edad: String; dni: integer; Tipodoc: integer; sexo: String; Loc: String; zona: integer);
+begin
+  Pantalla_programa.Form2.ADOquery.SQL.Text:= ('Select * from Personas where P_Nrodoc='+inttostr(dni));
+  Pantalla_programa.Form2.ADOquery.Open;   // Validacion si existe un usuario con ese documento
+  Pantalla_Programa.Form2.ADOquery.First;
+    If (dni = Pantalla_Programa.Form2.ADOquery.FieldByName('P_Nrodoc').Value)
+      then
+        showmessage('El usuario ya existe, no puede cargarlo')
+      else
+        begin
+          Pantalla_Programa.Form2.ADOquery.SQL.Clear;
+          Pantalla_Programa.Form2.ADOquery.SQL.Add('Insert into Personas Values ('+inttostr(dni)+','+inttostr(Tipodoc)+','+#39+nombre+#39+','+#39+Apellido+#39+','+#39+Edad+#39+','+#39+sexo+#39+','+#39+Loc+#39+','+inttostr(zona)+')');
+          Pantalla_Programa.Form2.ADOquery.ExecSQL;
+          Showmessage('A ingresado una persona exitosamente');
+        end;
+end;
+//------------BAJA DE PERSONA-----------------
+Procedure BajaPersona(dni: integer);
+begin
+  if (ValidarPersona(dni) = true)
+      then
+          begin
+              if Application.MessageBox('¿Seguro desea eliminar el usuario?','Atención',mb_OkCancel +
+                         mb_IconQuestion)= idOk
+                    then
+                      begin
+                        pantalla_Programa.Form2.ADOquery.SQL.Add('DELETE FROM Personas');
+                        pantalla_Programa.Form2.ADOquery.SQL.Add('Where P_NroDoc='+inttostr(dni));
+                        pantalla_Programa.Form2.ADOquery.Open;
+                        showmessage('Se borro el usuario exitosamente.');
+                      end;
+          end
+      else
+        ShowMessage('No puede eliminar ningun registro, ya que no existe el dni');
+end;
+//------------MODIFICACION PERSONA-----------------
+Procedure ModificarPersona(Nombre: String; Apellido: String; Edad: String; dni: integer; Tipodoc: integer; sexo: String; Loc: String; DniNuevo: Integer; zona: integer);
+begin
+  if (ValidarPersona(dni) = true)
+    then                                                                                                                                                                                                                                                      
+      begin     
+        Pantalla_Programa.Form2.ADOquery.SQL.Clear;
+        Pantalla_Programa.Form2.ADOquery.SQL.Add('Update Personas set P_Nrodoc='+inttostr(DniNuevo)+',P_Tipodoc='+inttostr(Tipodoc)+',P_Nombre='+#39+Nombre+#39+',P_Apellido='+#39+Apellido+#39+',P_Edad='+#39+edad+#39+',P_Sexo='+#39+sexo+#39+',P_Localidad='+#39+Loc+#39+',cod_zona='+inttostr(zona));
+        Pantalla_Programa.Form2.ADOquery.SQL.Add('Where P_Nrodoc='+Inttostr(dni));
+        Pantalla_Programa.Form2.ADOquery.ExecSQL;
+        Showmessage('Persona modificada exitosamente');
+      end
+    else
+      Showmessage('No puede modificar el registro, no existe');
+end;
+//_________________________________________________________________
+//_________________________________________________________________
+//_________________________________________________________________
+//_________________________________________________________________
+
+//--------------VALIDAR SI EXISTE Documento------------
+function ValidarDocumento(tipo: integer): boolean;
+begin
+  Pantalla_programa.Form2.ADOquery.SQL.Text:= ('Select * from TipoDocumento where TP_Clave='+inttostr(tipo));
+  Pantalla_programa.Form2.ADOquery.Open;   //
+    If (tipo = Pantalla_Programa.Form2.ADOquery.FieldByName('TP_Clave').Value)
+      then
+        ValidarDocumento:= true
+      else
+        ValidarDocumento:= false;
+end;
+//--------------ALTA DOCUMENTO------------
+Procedure AltaDocumento(id_doc: integer; DescDoc: String; SiglaDoc: string);
+begin
+  Pantalla_programa.Form2.ADOquery.SQL.Text:= ('Select * from TipoDocumento where TP_Sigla='+#39+SiglaDoc+#39);
+  Pantalla_programa.Form2.ADOquery.Open;   //
+  Pantalla_Programa.Form2.ADOquery.First;
+    If (SiglaDoc = Pantalla_Programa.Form2.ADOquery.FieldByName('TP_Sigla').Value)
+      then
+        showmessage('El tipo de documento que quiere ingresar ya existe')
+      else
+        begin
+          Pantalla_Programa.Form2.ADOquery.SQL.Clear;
+          Pantalla_Programa.Form2.ADOquery.SQL.Add('Insert into TipoDocumento Values ('+inttostr(id_doc)+','+#39+DescDoc+#39+','+#39+Sigladoc+#39+')');
+          Pantalla_Programa.Form2.ADOquery.ExecSQL;
+          Showmessage('Ingreso un nuevo tipo de documento exitosamente');
+        end;
+end;
+//--------------BAJA DOCUMENTO------------
+Procedure BajaDocumento(id_doc: integer);
+begin
+  if (ValidarDocumento(id_doc) = true)
+      then
+          begin
+              if Application.MessageBox('¿Seguro desea eliminar el tipo de documento?','Atención',mb_OkCancel +
+                         mb_IconQuestion)= idOk
+                    then
+                      begin
+                        pantalla_Programa.Form2.ADOquery.SQL.Add('DELETE FROM TipoDocumento');
+                        pantalla_Programa.Form2.ADOquery.SQL.Add('Where TP_Clave='+inttostr(id_doc));
+                        pantalla_Programa.Form2.ADOquery.Open;
+                        Showmessage('Usted elimino un documento correctamente');
+                      end;                              
+          end       
+      else
+        ShowMessage('No puede eliminar ningun registro, ya que no existe el tipo de documento');
+end;
+//--------------MODIFICAR DOCUMENTO------------
+Procedure ModificarDocumento(id_doc: integer; DescDoc: String; SiglaDoc: integer; Sigla_docnuevo: String);
+Begin
+  if (ValidarDocumento(SiglaDoc) = true)
+    then
+      begin
+        Pantalla_Programa.Form2.ADOquery.SQL.Clear;
+        Pantalla_Programa.Form2.ADOquery.SQL.Add('Update TipoDocumento set TP_Clave='+inttostr(id_doc)+',TP_Descripcion='+#39+DescDoc+#39+',TP_Sigla='+#39+Sigla_docnuevo+#39);
+        Pantalla_Programa.Form2.ADOquery.SQL.Add('Where TP_Clave='+inttostr(SiglaDoc)); {Modificar la clave seleccionada}
+        Pantalla_Programa.Form2.ADOquery.ExecSQL;
+        showmessage('Tipo de documento modificado exitosamente');
+      end
+    else
+      Showmessage('No puede modificar el registro, no existe');
+end;
+
+
+end.

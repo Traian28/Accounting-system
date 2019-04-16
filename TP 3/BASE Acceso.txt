@@ -1,0 +1,9 @@
+CREATE TABLE Acceso_Empresa (
+	Clave_Acceso int identity (1,1),
+	Acceso_Nombre Varchar (55),
+	Acceso_id Varchar(55),
+	Acceso_Conexion Varchar (250));
+
+Insert into Acceso_Empresa Values ('Empresa 1','//Empresa1','Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=Gestion_Documentos;Data Source=localhost;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=W7ET24;Use Encryption for Data=False');
+
+Insert into Acceso_Empresa Values ('Empresa 2','//Empresa2','Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=Gestion_Documentos2;Data Source=localhost;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=W7ET24;Use Encryption for Data=False');

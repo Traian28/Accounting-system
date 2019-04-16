@@ -1,0 +1,181 @@
+unit Pantalla_Documentos;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, Grids, Pantalla_Programa ,ExtCtrls, Hoja_Calculo, Pantalla_inicio ,RpCon, RpConDS, RpDefine, RpRave, RpRender, RpRenderPDF, RpBase, RpSystem,
+  RpRenderText;
+
+
+type
+  TForm3 = class(TForm)
+    StringGrid2: TStringGrid;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label1: TLabel;
+    BitBtn1: TBitBtn;
+    btn3: TBitBtn;
+    btn6: TBitBtn;
+    lbl8: TLabel;
+    lbl9: TLabel;
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure btn3Click(Sender: TObject);
+    procedure btn6Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm3.FormShow(Sender: TObject);
+var
+num: integer;
+begin
+
+  num:= 0;
+
+  Pantalla_Programa.Form2.ADOquery.SQL.Text:= ('Select * from TipoDocumento');
+  Pantalla_Programa.Form2.ADOquery.Open;
+  Pantalla_Programa.Form2.ADOquery.First;
+
+  While not (Pantalla_Programa.Form2.ADOquery.Eof) do
+    begin
+      stringgrid2.Cells [0,num] := Pantalla_Programa.Form2.ADOquery.FieldByName('TP_Clave').Value;
+      stringgrid2.Cells [1,num] := Pantalla_Programa.Form2.ADOquery.FieldByName('TP_Descripcion').Value;
+      stringgrid2.Cells [2,num] := Pantalla_Programa.Form2.ADOquery.FieldByName('TP_Sigla').Value;
+      Pantalla_Programa.Form2.ADOquery.Next;
+      num:= num+1;
+    end;
+end;
+
+procedure TForm3.BitBtn1Click(Sender: TObject);
+begin
+form2.Show;
+form3.Hide;
+end;          
+
+procedure TForm3.btn3Click(Sender: TObject);
+var
+  aa : string ;
+  FStream: TFileStream;
+  j: integer;
+  desc, sigla: string;
+  clave: integer;
+  //num: integer;
+begin
+
+if  (Pantalla_inicio.permiso = 1)
+  then
+    showmessage('No tiene acceso a esta accion')
+  else
+  begin
+        Pantalla_Programa.Form2.SaveDialog1.FileName :=
+           'Listado de documentacion' ;
+        Pantalla_Programa.Form2.saveDialog1.Filter := 'Excel|*.xls|PDF|*.pdf';
+
+        if not Pantalla_Programa.Form2.SaveDialog1.Execute
+        then
+          begin
+            exit ;
+          end           
+        else
+          if Pantalla_Programa.Form2.SaveDialog1.FilterIndex = 1
+            then
+              begin
+                   begin
+                   //Enruta al archivo para guardar
+                    aa := Pantalla_Programa.Form2.SaveDialog1.FileName +'.xls' ;
+                    FStream := TFileStream.Create( aa, fmCreate);
+                    XlsBeginStream(FStream, 0);
+
+                    // Crear las cabeceras de las columnas
+                        XlsWriteCellLabel(FStream, 1, 1, ' Listado de ');
+                        XlsWriteCellLabel(FStream, 2, 1, ' Documentos en ');
+                        XlsWriteCellLabel(FStream, 3, 1, ' El Sistema ');
+                        XlsWriteCellLabel(FStream, 1, 2, ' Fecha ');
+                        XlsWriteCellLabel(FStream, 2, 2, Pantalla_Programa.Form2.label7.Caption );
+                        XlsWriteCellLabel(FStream, 3, 2, ' Hora ');
+                        XlsWriteCellLabel(FStream, 4, 2, Pantalla_Programa.Form2.label43.Caption );
+
+                        XlsWriteCellLabel(FStream, 1, 4, ' Clave Doc. ');
+                        XlsWriteCellLabel(FStream, 2, 4, ' Descripcion ');
+                        XlsWriteCellLabel(FStream, 3, 4, ' Siglas ');
+                      //inicializa a partir de que columna empieza a listar  en excel
+                        j:= 5;
+                          //Accede a la query del programa para poder listar
+                          Pantalla_Programa.Form2.ADOQUery.SQL.Text:= ('Select * from TipoDocumento ORDER BY TP_Clave');
+                          Pantalla_Programa.Form2.ADOQuery.Open;
+                          Pantalla_Programa.Form2.ADOQuery.First;
+
+                          //Desde el primer hasta el ultimo registro para poder listar
+                          While not (Pantalla_Programa.Form2.ADOQuery.Eof) do
+                          begin
+                                    clave:= Pantalla_Programa.Form2.ADOQUERY.FIELDBYNAME('TP_CLAVE').VALUE;
+                                    desc:= Pantalla_Programa.Form2.ADOQUERY.FIELDBYNAME('TP_Descripcion').Value;
+                                    sigla:= Pantalla_Programa.Form2.ADOQUERY.FIELDBYNAME('TP_Sigla').Value;
+
+                                    XlsWriteCellLabel(FStream, 1, j, inttostr(clave));
+                                    XlsWriteCellLabel(FStream, 2, j, desc);
+                                    XlsWriteCellLabel(FStream, 3, j, sigla);
+                            j:= j+1;
+
+                            Pantalla_Programa.Form2.ADOQuery.Next;
+                          end;
+                   end;
+                   XlsEndStream(FStream);
+                   FStream.Free;
+               end
+              else
+                if  Pantalla_Programa.Form2.SaveDialog1.FilterIndex = 2
+                  then                              
+                    begin
+                      aa := Pantalla_Programa.Form2.SaveDialog1.FileName +'.pdf' ;
+                      Pantalla_Programa.Form2.RvSystem1.DefaultDest:= rdFile;
+                      Pantalla_Programa.Form2.RvSystem1.DoNativeOutput:= false;
+                      Pantalla_Programa.Form2.RvSystem1.RenderObject:= Pantalla_Programa.Form2.rvRenderPDF2;
+                      Pantalla_Programa.Form2.RvSystem1.OutputFileName:= aa;
+                      Pantalla_Programa.Form2.RvSystem1.SystemSetups:= Pantalla_Programa.Form2.RvSystem1.SystemSetups -[ssAllowSetup];
+                      Pantalla_Programa.Form2.Rvproject2.projectfile:= 'C:\Users\GoodLuck\Desktop\TP 2 - V\Reportes\Listado_Documento.rav';
+                      Pantalla_Programa.Form2.RvProject2.Engine:= Pantalla_Programa.Form2.RvSystem1;
+                      Pantalla_Programa.Form2.rvproject2.Execute;
+                    end;
+    end;
+end;
+
+procedure TForm3.btn6Click(Sender: TObject);
+begin
+  if  (Pantalla_inicio.permiso = 1)
+  then
+    showmessage('No tiene acceso a esta accion')
+  else
+    begin
+        with Pantalla_Programa.Form2.ADOQuery2 do
+        begin
+          close;
+            SQL.Clear;
+              SQL.Text:='SELECT * From TipoDocumento';
+              Open;
+
+            Pantalla_Programa.Form2.RvSystem1.DefaultDest    := rdPreview;
+            Pantalla_Programa.Form2.RvSystem1.DoNativeOutput := false;
+            Pantalla_Programa.Form2.RvSystem1.RenderObject   := Pantalla_Programa.Form2.RenderPreview1;
+            Pantalla_Programa.Form2.RvSystem1.SystemSetups   := Pantalla_Programa.Form2.RvSystem1.SystemSetups - [ssAllowSetup];
+            Pantalla_Programa.Form2.Rvproject1.projectfile:= 'C:\Users\GoodLuck\Desktop\TP 2 - V\Reportes\Listado_Documento.rav';
+            Pantalla_Programa.Form2.RvProject1.Engine:= Pantalla_Programa.Form2.RvSystem1;
+            Pantalla_Programa.Form2.rvproject1.Execute;
+        //Pantalla_Programa.Form2.RvProject1.Execute
+        end;
+    end;
+end;
+
+end.

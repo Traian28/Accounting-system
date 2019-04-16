@@ -1,0 +1,7 @@
+Create table Balance (
+	clave_balance int identity (1,1),
+	nom_cuenta Varchar (35),
+	codigo_cuenta Varchar (35),
+	Saldo_Debe Real,
+	Salo_Haber Real,
+	Saldo_Total real);

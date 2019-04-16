@@ -1,0 +1,162 @@
+Gestion_Documentos     (nombre tal cual usa el Query para SQL)
+
+ALTER TABLE Personas ADD FOREIGN KEY (cod_prov) REFERENCES Zonas_Ventas(ZC_Clave)  // No va
+
+ALTER TABLE Usuarios ADD FOREIGN KEY (Usuario_Perfil) REFERENCES Perfiles (P_Clave)  // No va
+
+
+
+
+Ejemplo:
+Insert into Auditoria values (37555328,96,'Mauro','Rudel','23','M',1,'pirania9',GETDATE(),'pc','alta');
+Insert into Auditoria values (37555328,96,'Mauro','Rudel','23','M',1,'pirania9','2017/05/01','pc','alta');
+Insert into Auditoria values (37555328,96,'Mauro','Rudelll','23','M',1,'pirania9',GETDATE(),'pc','Modificacion');
+Insert into Auditoria values (37555328,96,'Mauro','Rudel','23','M',1,'pirania9',GETDATE(),'pc','Modificacion');
+Insert into Auditoria values (37555328,96,'Ezequiel','Rudel','23','M',1,'pirania9',GETDATE(),'pc','Modificacion');
+
+
+insert into Auditoria_Usuario values ('pirania9','Maurito','hola123','asd@speedy.com.ar',2,'Mauro','2017/04/20','DesktopPC','Alta')
+insert into Auditoria_Usuario values ('Brian19','Brian','asd1234','briandos@hotmail.com',2,'Mauro','2017/04/25','PC DOS','ALTA')
+insert into Auditoria_Usuario values ('Brian19','Brian','Ayer123','briandos@hotmail.com',2,'Mauro','2017/04/28','PC DOS','MODIFICACION')
+insert into Auditoria_Usuario values ('pirania','Maurito','hola123','asd@speedy.com.ar',2,'Mauro',GETDATE(),'DesktopPC','Modificacion')
+insert into Auditoria_Usuario values ('pirania9','Maurito','hola123','asd@speedy.com.ar',2,'Mauro',GETDATE(),'DesktopPC','Modificacion')
+insert into Auditoria_Usuario values ('pirania91','Maurito','hola123','asd@speedy.com.ar',2,'Mauro',GETDATE(),'DesktopPC','Modificacion')
+
+
+/// INSERTAR DATOS ///
+
+
+INSERT INTO Zonas_Ventas Values  (01,'Norte','NO');
+INSERT INTO Zonas_Ventas Values  (02,'Sur','SU');
+INSERT INTO Zonas_Ventas Values  (03,'ESTE','ES');
+INSERT INTO Zonas_Ventas Values  (04,'Oeste','OE');
+INSERT INTO Zonas_Ventas Values  (05,'CENTRO','CE');
+
+
+INSERT INTO Perfiles Values  (1,'Primera Linea','PL');
+INSERT INTO Perfiles Values  (2,'Usuario VIP','U-VIP');
+INSERT INTO Perfiles Values  (3,'Administrador','ADMIN');
+INSERT INTO Perfiles Values  (4,'Pupervisor','SUP-Usuario');
+INSERT INTO Perfiles Values  (5,'Global','SUP-Global');
+INSERT INTO Perfiles Values  (6,'Impresora','Adm-Impresora');
+
+
+INSERT INTO TipoDocumento Values  (80,'Clave Única de Identificación Tributaria','CUIT');
+INSERT INTO TipoDocumento Values  (86,'Código Único de Identificación Laboral','CUIL');
+INSERT INTO TipoDocumento Values  (87,'Clave de Identificación','CDI');
+INSERT INTO TipoDocumento Values  (89,'Libreta Enrolamiento','LE');
+INSERT INTO TipoDocumento Values  (90,'Libreta Civica','LC');
+INSERT INTO TipoDocumento Values  (91,'CI extranjera','CI');
+INSERT INTO TipoDocumento Values  (92,'En Tramite','ENT');
+INSERT INTO TipoDocumento Values  (93,'Acta De Nacimiento','ACTA');
+INSERT INTO TipoDocumento Values  (95,'Tarjeta de Identidad Buenos Aires','CI Bs.As RNP');
+INSERT INTO TipoDocumento Values  (96,'Documento Nacional de Identidad','DNI');
+INSERT INTO TipoDocumento Values  (94,'Pasaporte','PAS');
+INSERT INTO TipoDocumento Values  (00,'Tarjeta de identidad Policia Federal','CIPFederal'); 
+
+
+INSERT INTO Personas Values (37555328,96,'Mauro','Rudel','23','M','Bahia Blanca',1);
+INSERT INTO Personas Values (30265443,96,'Raul','Martinez','29','M','Ciudad de La Plata',1);
+INSERT INTO Personas Values (36733991,96,'Luciana','Garcia','24','F','Ciudad de Neuquen',2);
+INSERT INTO Personas Values (528518,89,'Jose','De La Fuente','86','M','Cordoba Capital',3);
+INSERT INTO Personas Values (766952,90,'Miriam','Barrientos','79','F','Usuhaia',4);
+INSERT INTO Personas Values (00273342,94,'Ariel','Melinger','27','M','Ciudad de La Plata',1);
+INSERT INTO Personas Values (00392142,94,'Angelica','Kragner','21','F','Ciudad de Mendoza',5);
+
+
+Insert Into Usuarios values ('usuario','Mauro','123456','usuario123@hotmail.com',4);
+Insert Into Usuarios values ('1234','Mauro','1234','usuario123@hotmail.com',5);
+
+Insert into Acceso_Empresa Values ('Empresa 1','//Empresa1','Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=Gestion_Documentos;Data Source=localhost;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=W7ET24;Use Encryption for Data=False');
+
+
+
+
+///
+Create table TipoDocumento   (
+	TP_Clave int PRIMARY KEY,
+	TP_Descripcion Varchar(55),
+	TP_Sigla Varchar(15));
+
+Create table Zonas_Ventas   (
+	ZC_Clave int PRIMARY KEY,
+	ZC_Descripcion Varchar(55),
+	ZC_Sigla Varchar(15));
+
+Create table Perfiles   (
+	P_Clave int PRIMARY KEY,
+	P_Descripcion Varchar(55),
+	P_Sigla Varchar(15));
+
+
+
+Create table Personas   (
+	P_Nrodoc int PRIMARY KEY,
+	P_Tipodoc int,
+	P_Nombre Varchar(30),
+	P_Apellido Varchar(30),
+	P_Edad Varchar(3),
+	P_Sexo Varchar(1),
+	P_Localidad Varchar(85),
+	cod_zona int,
+FOREIGN KEY (cod_zona) references Zonas_Ventas (ZC_Clave),
+FOREIGN KEY (P_Tipodoc) references TipoDocumento (TP_Clave));
+
+CREATE TABLE Usuarios(
+	Usuario_ID varchar(30) PRIMARY KEY,
+	Usuario_Nombre varchar(30),
+	Usuario_pass varchar(30),
+	Usuario_Email varchar(55),
+	Usuario_perfil int);
+
+
+CREATE TABLE Auditoria  (
+	clave_Aud int identity (1,1),
+	nro_Doc int,
+	A_tipodoc int,
+	A_Nombre Varchar(30),
+	A_Apellido Varchar(30),
+	A_edad varchar(3),
+	A_Sexo varchar(1),
+	A_prov int,
+	A_usuario Varchar(30),
+	A_fecha date,
+	A_Terminal Varchar(30),
+	A_Accion Varchar(30));
+
+CREATE TABLE Auditoria_Doc (
+	clave_Aud_Doc int identity (1,1),
+	A_Doc_clave int,
+	A_Doc_Descripcion Varchar(55),
+	A_Doc_Sigla Varchar(15),
+	A_Doc_Usuario Varchar(30),
+	A_Doc_Fecha date,
+	A_Doc_Terminal Varchar(30),
+	A_Doc_Accion Varchar(30));
+
+CREATE TABLE Auditoria_usuario (
+	clave_Aud_usu int identity (1,1),
+	A_Usu_ID Varchar(30),
+	A_Usu_Nombre Varchar(30),
+	A_Usu_pass varchar(30),
+	A_Usu_Email Varchar(30),
+	A_Usu_Perfil int,
+	A_Usu_Usuario Varchar(30),
+	A_Usu_Fecha date,
+	A_Usu_Terminal Varchar(30),
+	A_Usu_Accion Varchar(30));
+
+
+CREATE TABLE Acceso_Empresa (
+	Clave_Acceso int identity (1,1),
+	Acceso_Nombre Varchar (55),
+	Acceso_id Varchar(55),
+	Acceso_Conexion Varchar (250));
+
+
+CREATE TABLE Auditoria_Datos (
+	Clave_Aud_Dat int identity (1,1),
+	A_dat_Usuario Varchar(30),
+	A_dat_Fecha date,
+	A_dat_Terminal Varchar(55),
+	A_dat_Accion Varchar(55));

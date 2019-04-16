@@ -1,0 +1,62 @@
+Select Distinct AS_Id_Asiento, AS_Concepto_Asiento, AS_Fecha_Ingreso
+From Asientos
+where AS_fecha_ingreso BETWEEN '2006-10-01' and '2008-11-03'
+order by AS_Fecha_Ingreso
+
+
+
+
+Tipo_asiento = Apertura, Normal, Cierre
+
+Create TABLE Numero_Asiento (
+	numero_asiento int primary key,
+	tipo_lugar varchar(2));
+
+Create TABLE Plan_Cuenta (
+	codigo_cuenta VARCHAR (50) PRIMARY KEY,
+	Nombre_Cuenta Varchar(75),
+	tipo_cuenta int,
+	Nivel_Cuenta int,
+	padre_cuenta VARCHAR (50));
+
+
+CREATE TABLE Asientos  (
+	AS_clave_as int identity (1,1),
+	AS_id_asiento int,
+	AS_num_pase int,
+	AS_id_cuenta varchar (55),
+	AS_concepto_asiento Varchar(55),
+	AS_importe_as decimal(8,2),
+	AS_tipo_saldo Varchar (10),
+	AS_leyenda_pase varchar(55),
+	AS_fecha_operacion date,
+	AS_fecha_vto date,
+	AS_fecha_ingreso date,
+	AS_borrador int,
+	AS_tipo_asiento int);
+
+CREATE TABLE borrador_Asientos  (
+	AS_clave_as int identity (1,1),
+	AS_id_asiento int,
+	AS_num_pase int,
+	AS_id_cuenta varchar (55),
+	AS_concepto_asiento Varchar(55),
+	AS_importe_as decimal(8,2),
+	AS_tipo_saldo Varchar (10),
+	AS_leyenda_pase varchar(55),
+	AS_fecha_operacion date,
+	AS_fecha_vto date,
+	AS_fecha_ingreso date,
+	AS_borrador int,
+	AS_tipo_asiento int);
+
+
+
+id cuenta
+nombre cuenta
+descripcion del asiento
+id asiento 
+concepto asciento
+importe asciento
+tipo D/H
+

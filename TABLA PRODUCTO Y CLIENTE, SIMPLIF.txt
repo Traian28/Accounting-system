@@ -1,0 +1,47 @@
+CREATE table Productos (
+	Clave_producto int PRIMARY KEY,
+	nombre_poducto varchar(50),
+	fecha_ingreso date,
+	stock int,
+	precio real,
+	tipo_tasa Varchar(50),
+	tasa_iva real,
+	precio_final real);
+
+
+CREATE Table Clientes (
+	Codigo_Cliente int PRIMARY KEY,
+	nombre_apellido Varchar(70),
+	domicilio_cliente Varchar(60),
+	cuit_cliente Varchar (30),
+	Sit_iva Varchar(25));	
+
+CREATE Table Puntos_Venta (
+	codigo_venta int PRIMARY KEY,
+	Descripcion Varchar(50));
+
+CREATE TAble Tipo_Factura (
+	Codigo_factura int identity (1,1),
+	Factura_A int,
+	Factura_B int,
+	Factura_C int);
+
+CREATE Table Tipo_Comprobantes (
+	Codigo_fac Varchar(25) PRIMARY KEY,
+	letra_fac Varchar(1),
+	descripcion_Fact varchar(50));
+
+Insert into Tipo_Comprobantes Values('001','A','Fact. A');
+Insert into Tipo_Comprobantes Values('002','A','N. Debito A');
+Insert into Tipo_Comprobantes Values('003','A','N.Credito A');
+Insert into Tipo_Comprobantes Values('004','A','Recibo A');
+Insert into Tipo_Comprobantes Values('005','A','Nota vta. Contado A');
+
+
+Insert into Tipo_Comprobantes Values('006','B','Fact. B');
+Insert into Tipo_Comprobantes Values('007','B','N. Debito B');
+Insert into Tipo_Comprobantes Values('008','B','N.Credito B');
+Insert into Tipo_Comprobantes Values('009','B','Recibo B');
+Insert into Tipo_Comprobantes Values('010','B','Nota vta. Contado B');
+
+

@@ -1,0 +1,63 @@
+CREATE Table Producto_Aux (
+	cod_aux int identity (1,1),
+	cod_articulo int null,
+	descripcion Varchar(50) null,
+	Cantidad Int null,
+	importe real null,
+	subtotal real null,
+	punto_venta Varchar(30) null,
+	desc_punto Varchar(50) null,
+	fecha date null,
+	comprobante Varchar(50) null,
+	Cuit_comp varchar(50) null,
+	condicion_iva Varchar(25) null,
+	domicilio VarChar(40) null,
+	Nombre_apellido Varchar(70) null,
+	tipo_factura Varchar(2) null,
+	neto21 real null,
+	iva21 real null,
+	neto27 real null,
+	iva27 real null,
+	neto105 real null,
+	iva105 real null,
+	exento real null,
+	pyr real null,
+	total real null);
+
+
+
+CREATE Table Producto_Aux (
+	cod_aux int identity (1,1),
+	cod_articulo int null,
+	descripcion Varchar(50) null,
+	Cantidad Int null,
+	importe real null,
+	subtotal real null,
+
+
+	punto_venta Varchar(30) null,
+	desc_punto Varchar(50) null,
+	fecha date null,
+	comprobante Varchar(50) null,
+	Cuit_comp varchar(50) null,
+	condicion_iva Varchar(25) null,
+	domicilio VarChar(40) null,
+	Nombre_apellido Varchar(70));
+
+
++'null'+
+
+Pantalla_Programa.Form2.ADOquery.SQL.Clear;
+Pantalla_Programa.Form2.ADOquery.SQL.Add('Insert into Producto_Aux Values ('+'null'+','+'null'+','+'null'+','+'null'+','+'null'+','+#39+edt8.Text+#39+','+#39+edt11.Text+#39+','+#39+edt7.Text+#39+','+#39+lbl10.Caption+#39+','+#39+edt5.Text+#39+','+#39+edt6.Text+#39+','+#39+edt4.Text+#39+','+#39+edt3.Text+#39+')');
+Pantalla_Programa.Form2.ADOquery.ExecSQL;
+
+
+
+  Pantalla_Programa.Form2.ADOquery.SQL.Clear;
+  Pantalla_Programa.Form2.ADOquery.SQL.Add('Insert into Producto_Aux Values ('+#39+edt13.Text+#39+','+#39+edt16.Text+#39+','+inttostr(cantidad)+','+FloatToStr(precio_total)+','+FloatToStr(precio_total)+')');
+  Pantalla_Programa.Form2.ADOquery.ExecSQL;
+
+Pantalla_Programa.Form2.ADOquery.SQL.Clear;
+Pantalla_Programa.Form2.ADOquery.SQL.Add('Insert into Producto_Aux Values ('+#39+edt13.Text+#39+','+#39+edt16.Text+#39+','+inttostr(cantidad)+','+FloatToStr(precio_total)+','+FloatToStr(precio_total)+','+'null'+','+'null'+','+'null'+','+'null'+','+'null'+','+'null'+','+'null'+','+'null'+')');
+Pantalla_Programa.Form2.ADOquery.ExecSQL;
+
